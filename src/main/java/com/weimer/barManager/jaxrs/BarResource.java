@@ -71,14 +71,16 @@ public class BarResource {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    public void deleteBar(@PathParam("id") Integer id) {
+    public boolean deleteBar(@PathParam("id") Integer id) {
         LOGGER.info("Delete Bar invoked, ID: {}", id);
         BarEntity barEntity = barRepository.findByCuit(id).orElseThrow(() -> {return new ApiException("ID NOT FOUND", id.toString());});
         try {
             barRepository.delete(barEntity);
         } catch (final DataAccessException e) {
             LOGGER.error("Cannot Delete Bar, ERROR: {}", e);
-            throw new RuntimeException();
+            //throw new RuntimeException();
+            return false;
         }
+        return true;
     }
 }
