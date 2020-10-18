@@ -37,7 +37,6 @@ public class BarResource {
         final List<BarEntity> bars = new ArrayList<>();
         barRepository.findAll().forEach(bars::add);
         LOGGER.info("list result: {}", bars);
-
         return bars;
     }
 
@@ -58,10 +57,14 @@ public class BarResource {
     public BarEntity save(BarEntity barEntity) {
         LOGGER.info("Bar save invoked, params: {}", barEntity);
         try {
-            final BarEntity bar = barEntity;
-            barRepository.save(bar);
-            LOGGER.info("list result: {}", bar);
-            return bar;
+            BarEntity existingBar = barRepository.findByCuit(barEntity.getCuit()).orElse( null);
+            if (existingBar != null)
+            {
+                new ApiException("CUIT ALREADY EXISTS", String.valueOf(barEntity.getCuit()));
+            }
+            barRepository.save(barEntity);
+            LOGGER.info("list result: {}", barEntity);
+            return barEntity;
         } catch (Exception e) {
             LOGGER.info("Bar not created ERROR: {}", e);
             throw new RuntimeException();

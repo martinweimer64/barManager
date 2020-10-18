@@ -27,7 +27,7 @@ import java.util.TimeZone;
 @SpringBootApplication
 public class BarManagerApplication {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(BarManagerApplication	.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BarManagerApplication.class);
 
 	@Autowired
 	private Environment environment;
@@ -36,13 +36,14 @@ public class BarManagerApplication {
 	DataSource dataSource;
 
     public static void main(String[] args) {
-        //SpringApplication.run(BarManagerApplication.class, args);
         final SpringApplicationBuilder builder = new SpringApplicationBuilder(BarManagerApplication.class);
         builder.headless(false);
         builder.run(args);
     }
 
-	public BarManagerApplication() {
+
+
+    public BarManagerApplication() {
 
 	}
     @Bean
